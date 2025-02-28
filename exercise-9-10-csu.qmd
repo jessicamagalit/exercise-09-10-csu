@@ -1,0 +1,72 @@
+---
+title: "exercise-09-csu"
+author: "Jessica Magalit"
+format: html
+---
+# Question 1:Use the help (?) function to learn more about the dataset
+
+```{r}
+data("airquality")
+?airquality
+
+```
+
+# Question 2:Use vis_dat to check out the data. Does it need cleaning?
+
+```{r}
+install.packages("visdat")
+library(visdat)
+vis_dat(airquality)
+clean_airquality <- na.omit(airquality)
+
+```
+
+# Question 3:Fit a linear model to the cleaned data to predict Ozone from one of the possible predictors of your choosing. Why did you chose thats variable?
+
+```{r}
+model <- lm(Ozone ~ Solar.R, data = clean_airquality)
+
+```
+
+# Question 4:Using summary(), Does this seem like a valid model?
+
+```{r}
+summary(model)
+
+```
+
+# Question 5:Explain the R2 found in a sentence
+The model explains only about 12.13% of the variation in ozone levels based on solar radiation, indicating that solar radiation alone is a weak predictor of ozone concentration in this dataset.
+```{r}
+
+```
+
+# Question 6:Use broom::augment to predict the Ozone of the cleaned data
+
+```{r}
+install.packages("broom")
+library(broom)
+
+# Augment the data with fitted values
+a <- augment(model, data = clean_airquality)
+
+```
+
+# Question 7:Use ggplot to plot the actual vs predicted Ozone
+
+```{r}
+install.packages("broom")  # Run this if you haven't already
+library(broom)
+a <- augment(model, data = clean_airquality)
+library(ggplot2)
+
+ggplot(a, aes(x = Ozone, y = .fitted)) +
+  geom_point() +  # Scatter plot of actual vs predicted
+  geom_abline(intercept = 0, slope = 1, color = "red") +  # 1:1 line
+  labs(
+    title = "Actual vs Predicted Ozone",
+    subtitle = paste("Correlation:", round(cor(a$Ozone, a$.fitted), 2))
+  ) +
+  theme_minimal()
+
+```
