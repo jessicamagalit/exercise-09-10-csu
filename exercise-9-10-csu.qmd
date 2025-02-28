@@ -14,7 +14,6 @@ data("airquality")
 # Question 2:Use vis_dat to check out the data. Does it need cleaning?
 
 ```{r}
-install.packages("visdat")
 library(visdat)
 vis_dat(airquality)
 clean_airquality <- na.omit(airquality)
@@ -44,7 +43,6 @@ The model explains only about 12.13% of the variation in ozone levels based on s
 # Question 6:Use broom::augment to predict the Ozone of the cleaned data
 
 ```{r}
-install.packages("broom")
 library(broom)
 
 # Augment the data with fitted values
@@ -55,7 +53,6 @@ a <- augment(model, data = clean_airquality)
 # Question 7:Use ggplot to plot the actual vs predicted Ozone
 
 ```{r}
-install.packages("broom")  # Run this if you haven't already
 library(broom)
 a <- augment(model, data = clean_airquality)
 library(ggplot2)
